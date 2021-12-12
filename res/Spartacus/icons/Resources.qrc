@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>About.png</file>
+        <file>Exit.png</file>
+        <file>Preferences.png</file>
+        <file>Spartacus.png</file>
+        <file>Login.png</file>
+        <file>Logout.png</file>
+        <file>LocalCluster.png</file>
+        <file>RemoteCluster.png</file>
+        <file>Accept.png</file>
+        <file>Cancel.png</file>
+        <file>OpenFolder.png</file>
+    </qresource>
+</RCC>
