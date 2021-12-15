@@ -19,25 +19,31 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
 
-// Qt
-#include <QApplication>
-#include <QSqlDatabase>
-#include <QTableView>
+#ifndef __Mercury_ShapeDatabaseModel_hxx__
+#define __Mercury_ShapeDatabaseModel_hxx__
 
 // Mercury
-#include <Mercury_Engine.hxx>
+#include <Mercury_DatabaseModel.hxx>
+#include <Mercury_Export.hxx>
+
 
 // ============================================================================
 /*!
-    \brief Mercury_Test
+ *  \brief Mercury_ShapeDatabaseModel
 */
 // ============================================================================
-int main(int argc, char** argv)
+class Mercury_ShapeDatabaseModel : public Mercury_DatabaseModel
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
+    Q_OBJECT
 
-}
+public:
+    // constructors
+    Mercury_EXPORT Mercury_ShapeDatabaseModel(const QSqlDatabase& theDatabase,
+                                              QObject* theParent  = nullptr);
+    // destructors
+    Mercury_EXPORT ~Mercury_ShapeDatabaseModel();
+
+};
+
+#endif // __Mercury_ShapeDatabaseModel_hxx__

@@ -19,25 +19,43 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
-
-// Qt
-#include <QApplication>
-#include <QSqlDatabase>
-#include <QTableView>
 
 // Mercury
-#include <Mercury_Engine.hxx>
+#include <Mercury_AdminDatabaseModel.hxx>
+
+
 
 // ============================================================================
 /*!
-    \brief Mercury_Test
+    \brief Constructor
 */
 // ============================================================================
-int main(int argc, char** argv)
+Mercury_AdminDatabaseModel::Mercury_AdminDatabaseModel(const QSqlDatabase& theDatabase,
+                                                       QObject* theParent)
+    : Mercury_DatabaseModel(theDatabase, theParent)
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
 
+}
+
+// ============================================================================
+/*!
+    \brief Destructor
+*/
+// ============================================================================
+Mercury_AdminDatabaseModel::~Mercury_AdminDatabaseModel()
+{
+
+}
+
+// ============================================================================
+/*!
+ *  \brief usersTableModel()
+*/
+// ============================================================================
+Mercury_UsersTableModel* Mercury_AdminDatabaseModel::usersTableModel()
+{
+    if(myUsersTableModel == nullptr)
+        myUsersTableModel = new Mercury_UsersTableModel(database(), this);
+    myUsersTableModel->setTable("users");
+    return myUsersTableModel;
 }

@@ -19,25 +19,37 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
+
+#ifndef __Mercury_Utilities_hxx__
+#define __Mercury_Utilities_hxx__
 
 // Qt
-#include <QApplication>
-#include <QSqlDatabase>
-#include <QTableView>
+#include <QString>
 
 // Mercury
-#include <Mercury_Engine.hxx>
+#include <Mercury_DriverType.hxx>
+#include <Mercury_Export.hxx>
+
 
 // ============================================================================
 /*!
-    \brief Mercury_Test
+ *  \brief Mercury_Utilities
+ *  Class implementation of utility functions.
 */
 // ============================================================================
-int main(int argc, char** argv)
+class Mercury_Utilities
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
 
-}
+public:
+
+    static Mercury_EXPORT QString               decryptString(const QString& theEncryptedString);
+    static Mercury_EXPORT Mercury_DriverType    driverType(const QString& theDriverName);
+    static Mercury_EXPORT QString               encryptString(const QString& theString);
+
+private:
+
+    static QString              encryptDecrypt(const QString& theString);
+
+};
+
+#endif // __Mercury_Utilities_hxx__

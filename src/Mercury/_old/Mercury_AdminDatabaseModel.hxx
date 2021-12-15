@@ -19,25 +19,40 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
 
-// Qt
-#include <QApplication>
-#include <QSqlDatabase>
-#include <QTableView>
+#ifndef __Mercury_AdminDatabaseModel_hxx__
+#define __Mercury_AdminDatabaseModel_hxx__
 
 // Mercury
-#include <Mercury_Engine.hxx>
+#include <Mercury_DatabaseModel.hxx>
+#include <Mercury_Export.hxx>
+#include <Mercury_UsersTableModel.hxx>
+
 
 // ============================================================================
 /*!
-    \brief Mercury_Test
+ *  \brief Mercury_AdminDatabaseModel
 */
 // ============================================================================
-int main(int argc, char** argv)
+class Mercury_AdminDatabaseModel : public Mercury_DatabaseModel
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
+    Q_OBJECT
 
-}
+public:
+    // constructors
+    Mercury_EXPORT Mercury_AdminDatabaseModel(const QSqlDatabase& theDatabase,
+                                              QObject* theParent  = nullptr);
+    // destructors
+    Mercury_EXPORT ~Mercury_AdminDatabaseModel();
+
+public:
+
+    Mercury_EXPORT Mercury_UsersTableModel*     usersTableModel();
+
+private:
+
+    Mercury_UsersTableModel*        myUsersTableModel;
+
+};
+
+#endif // __Mercury_AdminDatabaseModel_hxx__

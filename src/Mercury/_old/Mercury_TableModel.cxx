@@ -19,10 +19,16 @@
 //
 // ============================================================================
 
+#include <iostream>
+using namespace std;
 
 // Mercury
-#include <Mercury_Cluster.hxx>
-#include <Mercury_Engine.hxx>
+#include <Mercury_TableModel.hxx>
+#include <Mercury_Utilities.hxx>
+
+// Qt
+#include <QSqlError>
+#include <QSqlQuery>
 
 
 // ============================================================================
@@ -30,10 +36,9 @@
     \brief Constructor
 */
 // ============================================================================
-Mercury_Cluster::Mercury_Cluster(Mercury_Engine* theEngine,
-                                 const int theClusterId)
-    : myClusterId(theClusterId),
-      myEngine(theEngine)
+Mercury_TableModel::Mercury_TableModel(const QSqlDatabase& theDatabase,
+                                       QObject* theParent)
+    : QSqlTableModel(theParent, theDatabase)
 {
 
 }
@@ -43,39 +48,76 @@ Mercury_Cluster::Mercury_Cluster(Mercury_Engine* theEngine,
     \brief Destructor
 */
 // ============================================================================
-Mercury_Cluster::~Mercury_Cluster()
+Mercury_TableModel::~Mercury_TableModel()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief clusterId()
+ *  \brief create()
+ *  Create the table within database using the specified 'create statement'.
 */
 // ============================================================================
-int Mercury_Cluster::clusterId() const
+bool Mercury_TableModel::create()
 {
-    return myClusterId;
+    // check if non empty create statement
+    if(createStatement().isEmpty())
+        return false;
+    // executable 'create statement'
+    QSqlQuery aQuery(database());
+    if(!aQuery.exec(createStatement())) {
+        setLastError(aQuery.lastError());
+        return false;
+    }
+    return true;
 }
 
 // ============================================================================
 /*!
- *  \brief connectionName()
+ *  \brief driverType()
 */
 // ============================================================================
-QString Mercury_Cluster::connectionName() const
+Mercury_DriverType Mercury_TableModel::driverType() const
 {
-    QString aName = QString("mercury-cluster-%1").arg(myClusterId);
-    return aName.toLower();
+    return Mercury_Utilities::driverType(database().driverName());
 }
 
 // ============================================================================
 /*!
- *  \brief engine()
+ *  \brief drop()
 */
 // ============================================================================
-Mercury_Engine* Mercury_Cluster::engine()
+bool Mercury_TableModel::drop()
 {
-    return myEngine;
+    QSqlQuery aQuery(database());
+    if(!aQuery.exec(dropStatement())) {
+        setLastError(aQuery.lastError());
+        return false;
+    }
+    return true;
 }
+
+// ============================================================================
+/*!
+ *  \brief dropStatement()
+*/
+// ============================================================================
+QString Mercury_TableModel::dropStatement() const
+{
+    QString aString = QString("DROP TABLE IF EXISTS %1").arg(tableName());
+    return aString;
+}
+
+// ============================================================================
+/*!
+ *  \brief exists()
+ *  Check if table exists in database.
+*/
+// ============================================================================
+bool Mercury_TableModel::exists() const
+{
+    return database().tables().contains(tableName());
+}
+
 

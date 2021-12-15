@@ -19,25 +19,36 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
 
-// Qt
-#include <QApplication>
-#include <QSqlDatabase>
-#include <QTableView>
+#ifndef __Mercury_LShapeTableModel_hxx__
+#define __Mercury_LShapeTableModel_hxx__
+
 
 // Mercury
-#include <Mercury_Engine.hxx>
+#include <Mercury_Export.hxx>
+#include <Mercury_TableModel.hxx>
+
 
 // ============================================================================
 /*!
-    \brief Mercury_Test
+ *  \brief Mercury_LShapeTableModel
 */
 // ============================================================================
-int main(int argc, char** argv)
+class Mercury_LShapeTableModel : public Mercury_TableModel
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
+    Q_OBJECT
 
-}
+public:
+    // constructors
+    Mercury_EXPORT Mercury_LShapeTableModel(const QSqlDatabase& theDatabase,
+                                           QObject* theParent  = nullptr);
+    // destructors
+    Mercury_EXPORT ~Mercury_LShapeTableModel();
+
+protected:
+
+    Mercury_EXPORT QString              createStatement() const override;
+
+};
+
+#endif // __Mercury_LShapeTableModel_hxx__

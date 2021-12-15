@@ -25,26 +25,24 @@
 
 // Qt
 #include <QMap>
+#include <QSqlDatabase>
 #include <QString>
 
 // Mercury
-#include <Mercury_ClusterDriver.hxx>
-#include <Mercury_ClusterType.hxx>
+#include <Mercury_DriverType.hxx>
 #include <Mercury_Export.hxx>
-#include <Mercury_OpenError.hxx>
 
-// Forward definitions
+// Forward declarations
 class Mercury_Cluster;
 
 // Type definitions
-typedef QMap<int, Mercury_Cluster>      Mercury_MapOfCluster;
+typedef QMap<QString, Mercury_Cluster>      Mercury_MapOfCluster;
 
 
 
 // ============================================================================
 /*!
-    \brief Mercury_Cluster
-    Class implementation of a data cluster.
+ *  \brief Mercury_Cluster
 */
 // ============================================================================
 class Mercury_Cluster
@@ -53,22 +51,17 @@ class Mercury_Cluster
 public:
     // constructors
     Mercury_EXPORT Mercury_Cluster();
+    Mercury_EXPORT Mercury_Cluster(const Mercury_DriverType theDriverType,
+                                   const QString& theClusterName);
     // destructors
     Mercury_EXPORT ~Mercury_Cluster();
 
-protected:
-    // constructors
-    Mercury_EXPORT Mercury_Cluster(const int theClusterId,
-                                   const Mercury_ClusterType theClusterType);
-
 public:
 
-    static Mercury_EXPORT Mercury_Cluster   addCluster(const Mercury_ClusterType theClusterType);
-    static Mercury_EXPORT Mercury_Cluster   addCluster(const int theClusterId,
-                                                       const Mercury_ClusterType theClusterType);
-    static Mercury_EXPORT bool              isCluster(const int theClusterId);
+    static Mercury_EXPORT Mercury_Cluster   addCluster(const Mercury_DriverType theDriverType,
+                                                       const QString& theClusterName = defaultClusterName());
+    static Mercury_EXPORT QString           defaultClusterName();
     static Mercury_EXPORT int               nbClusters();
-    static Mercury_EXPORT bool              removeCluster(const int theClusterId);
 
 public:
 
@@ -76,47 +69,28 @@ public:
 
 public:
 
-    Mercury_EXPORT Mercury_ClusterDriver*   clusterDriver();
-    Mercury_EXPORT int                      clusterId() const;
-    Mercury_EXPORT QString                  clusterName() const;
-    Mercury_EXPORT Mercury_ClusterType      clusterType() const;
-    Mercury_EXPORT QString                  dirPath() const;
-    Mercury_EXPORT QString                  hostName() const;
-    Mercury_EXPORT bool                     isOpen() const;
-    Mercury_EXPORT bool                     isValid() const;
-    Mercury_EXPORT bool                     open();
-    Mercury_EXPORT bool                     open(const QString& theUserName,
-                                                 const QString& thePassword);
-    Mercury_EXPORT Mercury_OpenError        openError() const;
-    Mercury_EXPORT QString                  password() const;
-    Mercury_EXPORT int                      port() const;
-    Mercury_EXPORT void                     setDirPath(const QString& theDirPath);
-    Mercury_EXPORT void                     setHostName(const QString& theHostName);
-    Mercury_EXPORT void                     setPassword(const QString& thePassword);
-    Mercury_EXPORT void                     setPort(const int thePort);
-    Mercury_EXPORT void                     setUserName(const QString& theUserName);
-    Mercury_EXPORT QString                  userName() const;
+    Mercury_EXPORT QString              clusterName() const;
+    Mercury_EXPORT Mercury_DriverType   driverType() const;
+    Mercury_EXPORT QString              dirPath() const;
+    Mercury_EXPORT QString              hostName() const;
+    Mercury_EXPORT QString              password() const;
+    Mercury_EXPORT int                  port() const;
+    Mercury_EXPORT void                 setDirPath(const QString& theDirPath);
+    Mercury_EXPORT void                 setHostName(const QString& theHostName);
+    Mercury_EXPORT void                 setPassword(const QString& thePassword);
+    Mercury_EXPORT void                 setPort(const int thePort);
+    Mercury_EXPORT void                 setUserName(const QString& theUserName);
+    Mercury_EXPORT QString              userName() const;
 
 protected:
 
-    void                        resetClusterDriver();
-    void                        setClusterDriver(Mercury_ClusterDriver* theDriver);
-    void                        setNotOpen();
-    void                        setOpen();
-    void                        setOpenError(const Mercury_OpenError theError);
+    QString                 connectionName() const;
+    QSqlDatabase            database() const;
 
 private:
 
-    Mercury_ClusterDriver*      myClusterDriver;
-    int                         myClusterId;
-    Mercury_ClusterType         myClusterType;
-    QString                     myDirPath;
-    QString                     myHostName;
-    bool                        myIsOpen;
-    Mercury_OpenError           myOpenError;
-    QString                     myPassword;
-    int                         myPort;
-    QString                     myUserName;
+    QString                 myClusterName;
+    Mercury_DriverType      myDriverType;
 
 };
 

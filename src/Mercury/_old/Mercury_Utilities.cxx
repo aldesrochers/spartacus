@@ -19,63 +19,61 @@
 //
 // ============================================================================
 
+#include <iostream>
+#include <string>
+using namespace std;
 
 // Mercury
-#include <Mercury_Cluster.hxx>
-#include <Mercury_Engine.hxx>
+#include <Mercury_Utilities.hxx>
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief decryptString()
 */
 // ============================================================================
-Mercury_Cluster::Mercury_Cluster(Mercury_Engine* theEngine,
-                                 const int theClusterId)
-    : myClusterId(theClusterId),
-      myEngine(theEngine)
+QString Mercury_Utilities::decryptString(const QString &theEncryptedString)
 {
-
+    return encryptDecrypt(theEncryptedString);
 }
 
 // ============================================================================
 /*!
-    \brief Destructor
+    \brief driverType()
+    Retrieve the 'mercury' driver type based on QtSql driver name.
 */
 // ============================================================================
-Mercury_Cluster::~Mercury_Cluster()
+Mercury_DriverType Mercury_Utilities::driverType(const QString &theDriverName)
 {
-
+    if(theDriverName.compare("QSQLITE", Qt::CaseInsensitive) == 0)
+        return Mercury_SQLiteDriver;
+    else if(theDriverName.compare("QPSQL", Qt::CaseInsensitive) == 0)
+        return Mercury_PostgresDriver;
+    else
+        return Mercury_UnknownDriver;
 }
 
 // ============================================================================
 /*!
- *  \brief clusterId()
+ *  \brief encryptDecrypt()
 */
 // ============================================================================
-int Mercury_Cluster::clusterId() const
+QString Mercury_Utilities::encryptDecrypt(const QString &theString)
 {
-    return myClusterId;
+    char aKey[3] = {'a', 'l', 'd'};
+    string anInput = theString.toStdString();
+    string anOutput = theString.toStdString();
+    for (int i = 0; i < anInput.size(); i++)
+        anOutput[i] = anInput[i] ^ aKey[i % (sizeof(aKey) / sizeof(char))];
+    return QString::fromStdString(anOutput);
 }
 
 // ============================================================================
 /*!
- *  \brief connectionName()
+ *  \brief encryptString()
 */
 // ============================================================================
-QString Mercury_Cluster::connectionName() const
+QString Mercury_Utilities::encryptString(const QString &theString)
 {
-    QString aName = QString("mercury-cluster-%1").arg(myClusterId);
-    return aName.toLower();
+    return encryptDecrypt(theString);
 }
-
-// ============================================================================
-/*!
- *  \brief engine()
-*/
-// ============================================================================
-Mercury_Engine* Mercury_Cluster::engine()
-{
-    return myEngine;
-}
-

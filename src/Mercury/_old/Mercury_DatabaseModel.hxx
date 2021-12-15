@@ -19,25 +19,45 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
+
+#ifndef __Mercury_DatabaseModel_hxx__
+#define __Mercury_DatabaseModel_hxx__
 
 // Qt
-#include <QApplication>
+#include <QObject>
 #include <QSqlDatabase>
-#include <QTableView>
 
 // Mercury
-#include <Mercury_Engine.hxx>
+#include <Mercury_DriverType.hxx>
+#include <Mercury_Export.hxx>
+
 
 // ============================================================================
 /*!
-    \brief Mercury_Test
+ *  \brief Mercury_DatabaseModel
+ *  Base class implementation of a table model.
 */
 // ============================================================================
-int main(int argc, char** argv)
+class Mercury_DatabaseModel : public QObject
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
+    Q_OBJECT
 
-}
+public:
+    // constructors
+    Mercury_EXPORT Mercury_DatabaseModel(const QSqlDatabase& theDatabase,
+                                         QObject* theParent  = nullptr);
+    // destructors
+    Mercury_EXPORT ~Mercury_DatabaseModel();
+
+public:
+
+    Mercury_EXPORT QSqlDatabase         database() const;
+    Mercury_EXPORT Mercury_DriverType   driverType() const;
+
+private:
+
+    QSqlDatabase            myDatabase;
+
+};
+
+#endif // __Mercury_DatabaseModel_hxx__

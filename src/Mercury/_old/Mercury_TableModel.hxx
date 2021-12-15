@@ -19,25 +19,52 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
+
+#ifndef __Mercury_TableModel_hxx__
+#define __Mercury_TableModel_hxx__
 
 // Qt
-#include <QApplication>
+#include <QStringList>
 #include <QSqlDatabase>
-#include <QTableView>
+#include <QSqlTableModel>
 
 // Mercury
-#include <Mercury_Engine.hxx>
+#include <Mercury_DriverType.hxx>
+#include <Mercury_Export.hxx>
+
 
 // ============================================================================
 /*!
-    \brief Mercury_Test
+ *  \brief Mercury_TableModel
+ *  Base class implementation of a table model.
 */
 // ============================================================================
-int main(int argc, char** argv)
+class Mercury_TableModel : public QSqlTableModel
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
+    Q_OBJECT
 
-}
+public:
+    // constructors
+    Mercury_EXPORT Mercury_TableModel(const QSqlDatabase& theDatabase,
+                                      QObject* theParent  = nullptr);
+    // destructors
+    Mercury_EXPORT ~Mercury_TableModel();
+
+protected:
+
+    virtual Mercury_EXPORT QString      createStatement() const = 0;
+    virtual Mercury_EXPORT QString      dropStatement() const;
+
+public:
+
+    Mercury_EXPORT Mercury_DriverType   driverType() const;
+    Mercury_EXPORT bool                 exists() const;
+
+public slots:
+
+    Mercury_EXPORT virtual bool         create();
+    Mercury_EXPORT virtual bool         drop();
+
+};
+
+#endif // __Mercury_TableModel_hxx__

@@ -21,8 +21,7 @@
 
 
 // Mercury
-#include <Mercury_Cluster.hxx>
-#include <Mercury_Engine.hxx>
+#include <Mercury_LShapeTableModel.hxx>
 
 
 // ============================================================================
@@ -30,10 +29,9 @@
     \brief Constructor
 */
 // ============================================================================
-Mercury_Cluster::Mercury_Cluster(Mercury_Engine* theEngine,
-                                 const int theClusterId)
-    : myClusterId(theClusterId),
-      myEngine(theEngine)
+Mercury_LShapeTableModel::Mercury_LShapeTableModel(const QSqlDatabase& theDatabase,
+                                                   QObject* theParent)
+    : Mercury_TableModel(theDatabase, theParent)
 {
 
 }
@@ -43,39 +41,41 @@ Mercury_Cluster::Mercury_Cluster(Mercury_Engine* theEngine,
     \brief Destructor
 */
 // ============================================================================
-Mercury_Cluster::~Mercury_Cluster()
+Mercury_LShapeTableModel::~Mercury_LShapeTableModel()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief clusterId()
+ *  \brief createStatement()
 */
 // ============================================================================
-int Mercury_Cluster::clusterId() const
+QString Mercury_LShapeTableModel::createStatement() const
 {
-    return myClusterId;
+    QString aString = QString("CREATE TABLE %1 (").arg(tableName());
+    aString += "designation TEXT PRIMARY KEY, ";
+    aString += "area REAL NOT NULL, ";
+    aString += "Ix REAL NOT NULL, ";
+    aString += "Sx REAL NOT NULL, ";
+    aString += "rx REAL NOT NULL, ";
+    aString += "y REAL NOT NULL, ";
+    aString += "Iy REAL NOT NULL, ";
+    aString += "Sy REAL NOT NULL, ";
+    aString += "ry REAL NOT NULL, ";
+    aString += "x REAL NOT NULL, ";
+    aString += "J REAL NOT NULL, ";
+    aString += "Cw REAL NOT NULL, ";
+    aString += "mass REAL NOT NULL, ";
+    aString += "d REAL NOT NULL, ";
+    aString += "b REAL NOT NULL, ";
+    aString += "t REAL NOT NULL, ";
+    aString += "rxx REAL NOT NULL, ";
+    aString += "y0 REAL NOT NULL, ";
+    aString += "ryy REAL NOT NULL, ";
+    aString += "x0 REAL NOT NULL, ";
+    aString += "r0 REAL NOT NULL, ";
+    aString += "omega REAL NOT NULL, ";
+    aString += "alpha REAL NOT NULL)";
+    return aString;
 }
-
-// ============================================================================
-/*!
- *  \brief connectionName()
-*/
-// ============================================================================
-QString Mercury_Cluster::connectionName() const
-{
-    QString aName = QString("mercury-cluster-%1").arg(myClusterId);
-    return aName.toLower();
-}
-
-// ============================================================================
-/*!
- *  \brief engine()
-*/
-// ============================================================================
-Mercury_Engine* Mercury_Cluster::engine()
-{
-    return myEngine;
-}
-

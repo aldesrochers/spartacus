@@ -19,25 +19,43 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
 
-// Qt
-#include <QApplication>
-#include <QSqlDatabase>
-#include <QTableView>
+#ifndef __Mercury_UsersTableModel_hxx__
+#define __Mercury_UsersTableModel_hxx__
+
 
 // Mercury
-#include <Mercury_Engine.hxx>
+#include <Mercury_Export.hxx>
+#include <Mercury_TableModel.hxx>
+
 
 // ============================================================================
 /*!
-    \brief Mercury_Test
+ *  \brief Mercury_UsersTableModel
 */
 // ============================================================================
-int main(int argc, char** argv)
+class Mercury_UsersTableModel : public Mercury_TableModel
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
+    Q_OBJECT
 
-}
+public:
+    // constructors
+    Mercury_EXPORT Mercury_UsersTableModel(const QSqlDatabase& theDatabase,
+                                           QObject* theParent  = nullptr);
+    // destructors
+    Mercury_EXPORT ~Mercury_UsersTableModel();
+
+public:
+
+    virtual QVariant                    data(const QModelIndex& theIndex,
+                                             int theRole = Qt::DisplayRole) const override;
+    virtual bool                        setData(const QModelIndex& theIndex,
+                                                const QVariant& theValue, int theRole = Qt::DisplayRole) override;
+
+protected:
+
+    Mercury_EXPORT QString              createStatement() const override;
+
+};
+
+#endif // __Mercury_UsersTableModel_hxx__

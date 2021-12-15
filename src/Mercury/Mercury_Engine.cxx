@@ -21,8 +21,15 @@
 
 
 // Mercury
-#include <Mercury_Cluster.hxx>
 #include <Mercury_Engine.hxx>
+#include <Mercury_Version.hxx>
+
+// Qt
+#include <QDir>
+#include <QDebug>
+#include <QFile>
+#include <QSqlDatabase>
+#include <QVariant>
 
 
 // ============================================================================
@@ -30,10 +37,7 @@
     \brief Constructor
 */
 // ============================================================================
-Mercury_Cluster::Mercury_Cluster(Mercury_Engine* theEngine,
-                                 const int theClusterId)
-    : myClusterId(theClusterId),
-      myEngine(theEngine)
+Mercury_Engine::Mercury_Engine()
 {
 
 }
@@ -43,39 +47,57 @@ Mercury_Cluster::Mercury_Cluster(Mercury_Engine* theEngine,
     \brief Destructor
 */
 // ============================================================================
-Mercury_Cluster::~Mercury_Cluster()
+Mercury_Engine::~Mercury_Engine()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief clusterId()
+ *  \brief createLocalCluster()
 */
 // ============================================================================
-int Mercury_Cluster::clusterId() const
+bool Mercury_Engine::createLocalCluster(const int theClusterId,
+                                        const QString &theDirPath,
+                                        const QString &theAdminUserName,
+                                        const QString &theAdminPassword)
 {
-    return myClusterId;
+
 }
 
 // ============================================================================
 /*!
- *  \brief connectionName()
+ *  \brief isCluster()
 */
 // ============================================================================
-QString Mercury_Cluster::connectionName() const
+bool Mercury_Engine::isCluster(const int theClusterId)
 {
-    QString aName = QString("mercury-cluster-%1").arg(myClusterId);
-    return aName.toLower();
+    return myClusters.contains(theClusterId);
 }
 
 // ============================================================================
 /*!
- *  \brief engine()
+ *  \brief loginLocalCluster()
 */
 // ============================================================================
-Mercury_Engine* Mercury_Cluster::engine()
+bool Mercury_Engine::loginLocalCluster(const int theClusterID,
+                                       const QString &theDirPath,
+                                       const QString &theUserName,
+                                       const QString &thePassword)
 {
-    return myEngine;
+
 }
+
+// ============================================================================
+/*!
+ *  \brief versionNumber()
+*/
+// ============================================================================
+QVersionNumber Mercury_Engine::versionNumber() const
+{
+    return QVersionNumber(QVariant(Mercury_VERSION_MAJOR).toInt(),
+                          QVariant(Mercury_VERSION_MINOR).toInt(),
+                          QVariant(Mercury_VERSION_PATCH).toInt());
+}
+
 

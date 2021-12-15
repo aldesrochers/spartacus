@@ -19,25 +19,22 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
 
-// Qt
-#include <QApplication>
-#include <QSqlDatabase>
-#include <QTableView>
+#ifndef __Mercury_Error_hxx__
+#define __Mercury_Error_hxx__
 
-// Mercury
-#include <Mercury_Engine.hxx>
 
 // ============================================================================
 /*!
-    \brief Mercury_Test
+ *  \brief Mercury_Error
 */
 // ============================================================================
-int main(int argc, char** argv)
+enum Mercury_Error
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
+    Mercury_ExistingClusterError,
+    Mercury_InvalidDirectoryError,
+    Mercury_NoError,
+    Mercury_OpenError
+};
 
-}
+#endif // __Mercury_Error_hxx__

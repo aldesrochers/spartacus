@@ -20,47 +20,54 @@
 // ============================================================================
 
 
-#ifndef __Mercury_Cluster_hxx__
-#define __Mercury_Cluster_hxx__
+#ifndef __Mercury_Engine_hxx__
+#define __Mercury_Engine_hxx__
 
 // Qt
-#include <QObject>
+#include <QMap>
+#include <QVersionNumber>
 
 // Mercury
 #include <Mercury_Export.hxx>
 
 // Forward declarations
-class Mercury_Engine;
+class Mercury_Cluster;
+
+// Type definitions
+typedef QMap<int, Mercury_Cluster*>     Mercury_MapOfCluster;
 
 
 // ============================================================================
 /*!
- *  \brief Mercury_Cluster
- *  Base class implementation of a database cluster.
+ *  \brief Mercury_Engine
 */
 // ============================================================================
-class Mercury_Cluster : public QObject
+class Mercury_Engine
 {
-    Q_OBJECT
 
 public:
     // constructors
-    Mercury_Cluster(Mercury_Engine* theEngine,
-                    const int theClusterId);
+    Mercury_EXPORT Mercury_Engine();
     // destructors
-    ~Mercury_Cluster();
+    Mercury_EXPORT ~Mercury_Engine();
 
 public:
 
-    Mercury_EXPORT int                  clusterId() const;
-    Mercury_EXPORT QString              connectionName() const;
-    Mercury_EXPORT Mercury_Engine*      engine();
+    Mercury_EXPORT bool                 createLocalCluster(const int theClusterId,
+                                                           const QString& theDirPath,
+                                                           const QString& theAdminUserName,
+                                                           const QString& theAdminPassword);
+    Mercury_EXPORT bool                 isCluster(const int theClusterId);
+    Mercury_EXPORT bool                 loginLocalCluster(const int theClusterID,
+                                                          const QString& theDirPath,
+                                                          const QString& theUserName,
+                                                          const QString& thePassword);
+    Mercury_EXPORT QVersionNumber       versionNumber() const;
 
 private:
 
-    int                     myClusterId;
-    Mercury_Engine*         myEngine;
+    Mercury_MapOfCluster                myClusters;
 
 };
 
-#endif // __Mercury_Cluster_hxx__
+#endif // __Mercury_Engine_hxx__

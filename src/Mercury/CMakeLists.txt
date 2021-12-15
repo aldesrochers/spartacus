@@ -44,15 +44,14 @@ set(_linked_libraries
 # headers
 set(_headers
     Mercury_Cluster.hxx
+    Mercury_Engine.hxx
     Mercury_Export.hxx
-    Mercury_LocalCluster.hxx
-    Mercury_OpenError.hxx
 )
 
 # sources
 set(_sources
     Mercury_Cluster.cxx
-    Mercury_LocalCluster.cxx
+    Mercury_Engine.cxx
 )
 
 # uis
@@ -74,7 +73,8 @@ if(Mercury_BUILD_DEVELOPMENT)
 endif()
 
 # rules : executable
+include_directories(${Qt5Gui_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS})
 add_executable(TestMercury WIN32 Mercury_Test.cxx)
-target_link_libraries(TestMercury ${_linked_libraries} Mercury)
+target_link_libraries(TestMercury ${_linked_libraries} Mercury ${Qt5Gui_LIBRARIES} ${Qt5Widgets_LIBRARIES})
 install(TARGETS TestMercury DESTINATION ${Mercury_INSTALL_BINS})
 
