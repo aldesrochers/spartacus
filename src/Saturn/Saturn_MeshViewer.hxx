@@ -20,39 +20,8 @@
 // ============================================================================
 
 
-#ifndef __Mercury_AdminDatabaseModel_hxx__
-#define __Mercury_AdminDatabaseModel_hxx__
-
-// Mercury
-#include <Mercury_DatabaseModel.hxx>
-#include <Mercury_Export.hxx>
-#include <Mercury_UsersTableModel.hxx>
+#ifndef __Saturn_MeshViewer_hxx__
+#define __Saturn_MeshViewer_hxx__
 
 
-// ============================================================================
-/*!
- *  \brief Mercury_AdminDatabaseModel
-*/
-// ============================================================================
-class Mercury_AdminDatabaseModel : public Mercury_DatabaseModel
-{
-    Q_OBJECT
-
-public:
-    // constructors
-    Mercury_EXPORT Mercury_AdminDatabaseModel(const QSqlDatabase& theDatabase,
-                                              QObject* theParent  = nullptr);
-    // destructors
-    Mercury_EXPORT ~Mercury_AdminDatabaseModel();
-
-public:
-
-    Mercury_EXPORT Mercury_UsersTableModel*     usersTableModel();
-
-private:
-
-    Mercury_UsersTableModel*        myUsersTableModel;
-
-};
-
-#endif // __Mercury_AdminDatabaseModel_hxx__
+#endif // __Saturn_MeshViewer_hxx__

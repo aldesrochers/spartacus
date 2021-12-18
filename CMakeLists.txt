@@ -38,15 +38,17 @@ endif()
 ###
 # options
 ###
-option(Spartacus_BUILD_DEVELOPMENT  "Build Spartacus in development mode ?" ON)
-option(Spartacus_BUILD_STANDALONE   "Build Spartacus in stand-alone mode ?" ON)
+option(Spartacus_BUILD_DEVELOPMENT      "Build Spartacus in development mode ?" ON)
+option(Spartacus_BUILD_DOCUMENTATION    "Build Spartacus documentation ?" ON)
+option(Spartacus_BUILD_STANDALONE       "Build Spartacus in stand-alone mode ?" ON)
+option(Spartacus_BUILD_TESTS            "Build Spartacus tests ?" ON)
+option(Spartacus_USE_QT6                "Build Spartacus using Qt6 ?" OFF)
 
 ###
 # configuration
 ###
 
 # always build in shared mode
-add_definitions("-DSpartacus_EXPORTS=1")
 set(BUILD_SHARED_LIBS ON)
 
 # install directories
@@ -67,10 +69,12 @@ include(SetupICONV)
 include(SetupICU)
 include(SetupINTL)
 include(SetupMD4C)
+include(SetupOPENCASCADE)
 include(SetupPCRE)
 include(SetupPNG)
 include(SetupQT)
 include(SetupRUNTIME)
+include(SetupTRILINOS)
 include(SetupZLIB)
 include(SetupZSTD)
 
@@ -79,8 +83,13 @@ include(SetupZSTD)
 # sources
 ###
 add_subdirectory(adm)
-add_subdirectory(doc)
+if(Spartacus_BUILD_DOCUMENTATION)
+    add_subdirectory(doc)
+endif()
 add_subdirectory(res)
 add_subdirectory(src)
+if(Spartacus_BUILD_TESTS)
+    add_subdirectory(tests)
+endif()
 
 

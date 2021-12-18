@@ -20,42 +20,32 @@
 // ============================================================================
 
 
+#ifndef __Mercury_TableModel_hxx__
+#define __Mercury_TableModel_hxx__
+
+// Qt
+#include <QSqlTableModel>
+
 // Mercury
-#include <Mercury_AdminDatabaseModel.hxx>
-
+#include <Mercury_Export.hxx>
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief Mercury_TableModel
 */
 // ============================================================================
-Mercury_AdminDatabaseModel::Mercury_AdminDatabaseModel(const QSqlDatabase& theDatabase,
-                                                       QObject* theParent)
-    : Mercury_DatabaseModel(theDatabase, theParent)
+class Mercury_EXPORT Mercury_TableModel : public QSqlTableModel
 {
+    Q_OBJECT
 
-}
+public:
+    // constructors
+    Mercury_TableModel(const QSqlDatabase& theDatabase,
+                       QObject* theParent  = nullptr);
+    // destructors
+    ~Mercury_TableModel();
 
-// ============================================================================
-/*!
-    \brief Destructor
-*/
-// ============================================================================
-Mercury_AdminDatabaseModel::~Mercury_AdminDatabaseModel()
-{
+};
 
-}
-
-// ============================================================================
-/*!
- *  \brief usersTableModel()
-*/
-// ============================================================================
-Mercury_UsersTableModel* Mercury_AdminDatabaseModel::usersTableModel()
-{
-    if(myUsersTableModel == nullptr)
-        myUsersTableModel = new Mercury_UsersTableModel(database(), this);
-    myUsersTableModel->setTable("users");
-    return myUsersTableModel;
-}
+#endif // __Mercury_TableModel_hxx__

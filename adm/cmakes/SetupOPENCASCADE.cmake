@@ -19,9 +19,29 @@
 #
 # =============================================================================
 
-# toolkits
-add_subdirectory(Mercury)
-add_subdirectory(Saturn)
+# set opencascade required components
+set(OpenCASCADE_REQUIRED_COMPONENTS
+    FoundationClasses
+)
 
-# spartacus
-add_subdirectory(Spartacus)
+# try to locate opencascade using standard macros
+find_package(OpenCASCADE REQUIRED)
+if(NOT OpenCASCADE_FOUND)
+    message(FATAL_ERROR "Could not locate OpenCASCADE.")
+endif()
+mark_as_advanced(OpenCASCADE_DIR)
+
+# set some additional variables
+set(OpenCASCADE_INCLUDE_DIRS ${OpenCASCADE_INCLUDE_DIR})
+
+# install required libraries
+foreach(_component ${OpenCASCADE_REQUIRED_COMPONENTS})
+    set(_libraries ${OpenCASCADE_${_component}_LIBRARIES})
+    foreach(_library ${_libraries})
+        get_target_property(_filename ${_library} LOCATION)
+        if(NOT EXISTS ${_filename})
+            message(FATAL_ERROR "Could not locate OpenCASCADE library ${_filename}.")
+        endif()
+        install(FILES ${_filename} DESTINATION ${Spartacus_INSTALL_BINARIES})
+    endforeach()
+endforeach()

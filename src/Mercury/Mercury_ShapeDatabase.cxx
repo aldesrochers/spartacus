@@ -20,42 +20,29 @@
 // ============================================================================
 
 
-#ifndef __Mercury_UsersTableModel_hxx__
-#define __Mercury_UsersTableModel_hxx__
-
-
 // Mercury
-#include <Mercury_Export.hxx>
-#include <Mercury_TableModel.hxx>
+#include <Mercury_ShapeDatabase.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief Mercury_UsersTableModel
+ *  \brief Constructor
 */
 // ============================================================================
-class Mercury_UsersTableModel : public Mercury_TableModel
+Mercury_ShapeDatabase::Mercury_ShapeDatabase()
 {
-    Q_OBJECT
 
-public:
-    // constructors
-    Mercury_EXPORT Mercury_UsersTableModel(const QSqlDatabase& theDatabase,
-                                           QObject* theParent  = nullptr);
-    // destructors
-    Mercury_EXPORT ~Mercury_UsersTableModel();
+}
 
-public:
+// ============================================================================
+/*!
+ *  \brief Destructor
+*/
+// ============================================================================
+Mercury_ShapeDatabase::~Mercury_ShapeDatabase()
+{
 
-    virtual QVariant                    data(const QModelIndex& theIndex,
-                                             int theRole = Qt::DisplayRole) const override;
-    virtual bool                        setData(const QModelIndex& theIndex,
-                                                const QVariant& theValue, int theRole = Qt::DisplayRole) override;
+}
 
-protected:
 
-    Mercury_EXPORT QString              createStatement() const override;
 
-};
-
-#endif // __Mercury_UsersTableModel_hxx__

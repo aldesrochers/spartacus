@@ -20,60 +20,68 @@
 // ============================================================================
 
 #include <iostream>
-#include <string>
 using namespace std;
 
 // Mercury
-#include <Mercury_Utilities.hxx>
+#include <Mercury_TableView.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief decryptString()
+ *  \brief Constructor
 */
 // ============================================================================
-QString Mercury_Utilities::decryptString(const QString &theEncryptedString)
+Mercury_TableView::Mercury_TableView(QWidget* theParent)
+    : QTableView(theParent)
 {
-    return encryptDecrypt(theEncryptedString);
+
 }
 
 // ============================================================================
 /*!
-    \brief driverType()
-    Retrieve the 'mercury' driver type based on QtSql driver name.
+ *  \brief Destructor
 */
 // ============================================================================
-Mercury_DriverType Mercury_Utilities::driverType(const QString &theDriverName)
+Mercury_TableView::~Mercury_TableView()
 {
-    if(theDriverName.compare("QSQLITE", Qt::CaseInsensitive) == 0)
-        return Mercury_SQLiteDriver;
-    else if(theDriverName.compare("QPSQL", Qt::CaseInsensitive) == 0)
-        return Mercury_PostgresDriver;
-    else
-        return Mercury_UnknownDriver;
+
 }
 
 // ============================================================================
 /*!
- *  \brief encryptDecrypt()
+ *  \brief createPopupMenu()
 */
 // ============================================================================
-QString Mercury_Utilities::encryptDecrypt(const QString &theString)
+QMenu* Mercury_TableView::createPopupMenu()
 {
-    char aKey[3] = {'a', 'l', 'd'};
-    string anInput = theString.toStdString();
-    string anOutput = theString.toStdString();
-    for (int i = 0; i < anInput.size(); i++)
-        anOutput[i] = anInput[i] ^ aKey[i % (sizeof(aKey) / sizeof(char))];
-    return QString::fromStdString(anOutput);
+    QMenu* aMenu = new QMenu(this);
+    QAction* addAction = aMenu->addAction(tr("Add"));
+    connect(addAction, SIGNAL(triggered(bool)), this, SLOT(insertRecord()));
+    QAction* submitAction = aMenu->addAction(tr("Submit"));
+    connect(submitAction, SIGNAL(triggered(bool)), model(), SLOT(submitAll()));
+    return aMenu;
 }
 
 // ============================================================================
 /*!
- *  \brief encryptString()
+ *  \brief insertRecord()
 */
 // ============================================================================
-QString Mercury_Utilities::encryptString(const QString &theString)
+void Mercury_TableView::insertRecord()
 {
-    return encryptDecrypt(theString);
+    cout << model()->insertRow(0) << endl;
+}
+
+// ============================================================================
+/*!
+ *  \brief mousePressEvent()
+*/
+// ============================================================================
+void Mercury_TableView::mousePressEvent(QMouseEvent *theEvent)
+{
+    if(theEvent->button() == Qt::RightButton) {
+        QPoint aPosition = mapToGlobal(theEvent->pos());
+        QMenu* aMenu = createPopupMenu();
+        aMenu->exec(aPosition);
+    }
 }

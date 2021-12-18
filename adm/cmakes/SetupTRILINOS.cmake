@@ -19,9 +19,6 @@
 #
 # =============================================================================
 
-# toolkits
-add_subdirectory(Mercury)
-add_subdirectory(Saturn)
+# try to locate using standard macros
+find_package(Trilinos REQUIRED)
 
-# spartacus
-add_subdirectory(Spartacus)

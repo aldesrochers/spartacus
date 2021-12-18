@@ -19,9 +19,28 @@
 #
 # =============================================================================
 
-# toolkits
-add_subdirectory(Mercury)
-add_subdirectory(Saturn)
+# include directories
+include_directories(
+    ${PROJECT_BINARY_DIR}/src/Mercury
+    ${PROJECT_SOURCE_DIR}/src/Mercury
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Gui_INCLUDE_DIRS}
+    ${Qt5Widgets_INCLUDE_DIRS}
+    ${Qt5Sql_INCLUDE_DIRS}
+)
 
-# spartacus
-add_subdirectory(Spartacus)
+# linked libraries
+set(_linked_libraries
+    ${Qt5Core_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Sql_LIBRARIES}
+    Mercury
+)
+
+# rule : TestCluster
+add_executable(Mercury_TestCluster WIN32 Mercury_TestCluster.cxx)
+target_link_libraries(Mercury_TestCluster ${_linked_libraries})
+

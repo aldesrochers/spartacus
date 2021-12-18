@@ -19,59 +19,26 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
-
 // Mercury
-#include <Mercury_DatabaseModel.hxx>
-#include <Mercury_Utilities.hxx>
-
-// Qt
-#include <QSqlError>
-#include <QSqlQuery>
+#include <Mercury_Shape.hxx>
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief Constructor
 */
 // ============================================================================
-Mercury_DatabaseModel::Mercury_DatabaseModel(const QSqlDatabase& theDatabase,
-                                             QObject* theParent)
-    : QObject(theParent),
-      myDatabase(theDatabase)
+Mercury_Shape::Mercury_Shape()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief Destructor
+ *  \brief Destructor
 */
 // ============================================================================
-Mercury_DatabaseModel::~Mercury_DatabaseModel()
+Mercury_Shape::~Mercury_Shape()
 {
 
 }
-
-// ============================================================================
-/*!
- *  \brief database()
-*/
-// ============================================================================
-QSqlDatabase Mercury_DatabaseModel::database() const
-{
-    return myDatabase;
-}
-
-// ============================================================================
-/*!
- *  \brief driverType()
-*/
-// ============================================================================
-Mercury_DriverType Mercury_DatabaseModel::driverType() const
-{
-    return Mercury_Utilities::driverType(database().driverName());
-}
-
-

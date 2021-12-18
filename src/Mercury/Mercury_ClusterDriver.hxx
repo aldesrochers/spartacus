@@ -20,54 +20,48 @@
 // ============================================================================
 
 
-#ifndef __Mercury_Engine_hxx__
-#define __Mercury_Engine_hxx__
+#ifndef __Mercury_ClusterDriver_hxx__
+#define __Mercury_ClusterDriver_hxx__
 
 // Qt
-#include <QMap>
-#include <QVersionNumber>
+#include <QObject>
+#include <QSqlDatabase>
 
 // Mercury
 #include <Mercury_Export.hxx>
 
-// Forward declarations
-class Mercury_Cluster;
-
-// Type definitions
-typedef QMap<int, Mercury_Cluster*>     Mercury_MapOfCluster;
-
 
 // ============================================================================
 /*!
- *  \brief Mercury_Engine
+ *  \brief Mercury_ClusterDriver
+ *  Base class implementation of a cluster driver.
 */
 // ============================================================================
-class Mercury_Engine
+class Mercury_EXPORT Mercury_ClusterDriver : public QObject
 {
+    Q_OBJECT
 
 public:
     // constructors
-    Mercury_EXPORT Mercury_Engine();
+    Mercury_ClusterDriver(QObject* theParent = nullptr);
     // destructors
-    Mercury_EXPORT ~Mercury_Engine();
+    ~Mercury_ClusterDriver();
 
 public:
 
-    Mercury_EXPORT bool                 createLocalCluster(const int theClusterId,
-                                                           const QString& theDirPath,
-                                                           const QString& theAdminUserName,
-                                                           const QString& theAdminPassword);
-    Mercury_EXPORT bool                 isCluster(const int theClusterId);
-    Mercury_EXPORT bool                 loginLocalCluster(const int theClusterID,
-                                                          const QString& theDirPath,
-                                                          const QString& theUserName,
-                                                          const QString& thePassword);
-    Mercury_EXPORT QVersionNumber       versionNumber() const;
+    QString             connectionName() const;
+    QString             password() const;
+    QString             userName() const;
+    void                setConnectionName(const QString& theConnectionName);
+    void                setPassword(const QString& thePassword);
+    void                setUserName(const QString& theUserName);
 
 private:
 
-    Mercury_MapOfCluster                myClusters;
+    QString             myConnectionName;
+    QString             myPassword;
+    QString             myUserName;
 
 };
 
-#endif // __Mercury_Engine_hxx__
+#endif // __Mercury_ClusterDriver_hxx__

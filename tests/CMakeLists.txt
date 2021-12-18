@@ -19,9 +19,4 @@
 #
 # =============================================================================
 
-# toolkits
 add_subdirectory(Mercury)
-add_subdirectory(Saturn)
-
-# spartacus
-add_subdirectory(Spartacus)

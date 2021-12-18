@@ -20,51 +20,47 @@
 // ============================================================================
 
 
-#ifndef __Mercury_TableModel_hxx__
-#define __Mercury_TableModel_hxx__
+#ifndef __Mercury_DatabaseDriver_hxx__
+#define __Mercury_DatabaseDriver_hxx__
 
 // Qt
-#include <QStringList>
+#include <QObject>
 #include <QSqlDatabase>
-#include <QSqlTableModel>
 
 // Mercury
-#include <Mercury_DriverType.hxx>
 #include <Mercury_Export.hxx>
+
+
 
 
 // ============================================================================
 /*!
- *  \brief Mercury_TableModel
- *  Base class implementation of a table model.
+ *  \brief Mercury_DatabaseDriver
 */
 // ============================================================================
-class Mercury_TableModel : public QSqlTableModel
+class Mercury_EXPORT Mercury_DatabaseDriver : public QObject
 {
-    Q_OBJECT
 
 public:
     // constructors
-    Mercury_EXPORT Mercury_TableModel(const QSqlDatabase& theDatabase,
-                                      QObject* theParent  = nullptr);
+    Mercury_DatabaseDriver(QObject* theParent = nullptr);
     // destructors
-    Mercury_EXPORT ~Mercury_TableModel();
-
-protected:
-
-    virtual Mercury_EXPORT QString      createStatement() const = 0;
-    virtual Mercury_EXPORT QString      dropStatement() const;
+    ~Mercury_DatabaseDriver();
 
 public:
 
-    Mercury_EXPORT Mercury_DriverType   driverType() const;
-    Mercury_EXPORT bool                 exists() const;
+    QString             connectionName() const;
+    QString             driverName() const;
+    QSqlDatabase        handle(const bool open = true) const;
+    bool                isOpen() const;
+    void                setConnectionName(const QString& theConnectionName);
+    void                setDriverName(const QString& theDriverName);
 
-public slots:
+private:
 
-    Mercury_EXPORT virtual bool         create();
-    Mercury_EXPORT virtual bool         drop();
+    QString             myConnectionName;
+    QString             myDriverName;
 
 };
 
-#endif // __Mercury_TableModel_hxx__
+#endif // __Mercury_DatabaseDriver_hxx__

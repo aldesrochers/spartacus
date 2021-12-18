@@ -28,7 +28,8 @@ using namespace std;
 #include <QTableView>
 
 // Mercury
-#include <Mercury_Engine.hxx>
+#include <Mercury_Cluster.hxx>
+
 
 // ============================================================================
 /*!
@@ -37,7 +38,7 @@ using namespace std;
 // ============================================================================
 int main(int argc, char** argv)
 {
-    Mercury_Engine* anEngine = new Mercury_Engine();
-    cout << anEngine->createLocalCluster(1, "C:/Projects/spartacus/src/Mercury/cluster/", "alexis", "test") << endl;
+    Mercury_Cluster aCluster = Mercury_Cluster::addCluster(Mercury_LocalClusterType);
+    cout << aCluster.isValid() << endl;
 
 }

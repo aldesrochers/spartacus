@@ -20,25 +20,43 @@
 // ============================================================================
 
 
-#ifndef __Mercury_OpenError_hxx__
-#define __Mercury_OpenError_hxx__
+#ifndef __Mercury_TableView_hxx__
+#define __Mercury_TableView_hxx__
+
+// Qt
+#include <QAbstractItemModel>
+#include <QMenu>
+#include <QMouseEvent>
+#include <QTableView>
+
+// Mercury
+#include <Mercury_Export.hxx>
 
 
 // ============================================================================
 /*!
-    \brief Mercury_OpenError
-    Enumeration of open error types.
+ *  \brief Mercury_TableView
 */
 // ============================================================================
-enum Mercury_OpenError
+class Mercury_EXPORT Mercury_TableView : public QTableView
 {
-    Mercury_NoError,
-    Mercury_ConnectionError,
-    Mercury_InexistingDirectoryPathError,
-    Mercury_EmptyPasswordError,
-    Mercury_EmptyUserNameError,
-    Mercury_EmptyHostNameError,
-    Mercury_EmptyPortError
+    Q_OBJECT
+
+public:
+    // constructors
+    Mercury_TableView(QWidget* theParent  = nullptr);
+    // destructors
+    ~Mercury_TableView();
+
+protected:
+
+    virtual QMenu*      createPopupMenu();
+    virtual void        mousePressEvent(QMouseEvent* theEvent) override;
+
+protected slots:
+
+    virtual void        insertRecord();
+
 };
 
-#endif // __Mercury_OpenError_hxx__
+#endif // __Mercury_TableView_hxx__

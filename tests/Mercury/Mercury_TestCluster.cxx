@@ -19,22 +19,26 @@
 //
 // ============================================================================
 
+#include <iostream>
+using namespace std;
 
-#ifndef __Mercury_DriverType_hxx__
-#define __Mercury_DriverType_hxx__
+// Qt
+#include <QApplication>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+
+// Mercury
+#include <Mercury_ShapeDatabase.hxx>
+
 
 
 // ============================================================================
 /*!
- *  \brief Mercury_DriverType
- *  Enumeration of 'mercury' supported SQL driver types.
+ *  \brief Mercury_TestCluster
 */
 // ============================================================================
-enum Mercury_DriverType
+int main(int argc, char** argv)
 {
-    Mercury_PostgresDriver,
-    Mercury_SQLiteDriver,
-    Mercury_UnknownDriver
-};
+    Mercury_ShapeDatabase aDatabase;
 
-#endif // __Mercury_DriverType_hxx__
+}

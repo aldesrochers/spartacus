@@ -21,83 +21,86 @@
 
 
 // Mercury
-#include <Mercury_Engine.hxx>
-#include <Mercury_Version.hxx>
-
-// Qt
-#include <QDir>
-#include <QDebug>
-#include <QFile>
-#include <QSqlDatabase>
-#include <QVariant>
+#include <Mercury_ClusterDriver.hxx>
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief Constructor
 */
 // ============================================================================
-Mercury_Engine::Mercury_Engine()
+Mercury_ClusterDriver::Mercury_ClusterDriver(QObject* theParent)
+    : QObject(theParent)
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief Destructor
+ *  \brief Destructor
 */
 // ============================================================================
-Mercury_Engine::~Mercury_Engine()
+Mercury_ClusterDriver::~Mercury_ClusterDriver()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief createLocalCluster()
+ *  \brief connectionName()
 */
 // ============================================================================
-bool Mercury_Engine::createLocalCluster(const int theClusterId,
-                                        const QString &theDirPath,
-                                        const QString &theAdminUserName,
-                                        const QString &theAdminPassword)
+QString Mercury_ClusterDriver::connectionName() const
 {
-
+    return myConnectionName;
 }
 
 // ============================================================================
 /*!
- *  \brief isCluster()
+ *  \brief password()
 */
 // ============================================================================
-bool Mercury_Engine::isCluster(const int theClusterId)
+QString Mercury_ClusterDriver::password() const
 {
-    return myClusters.contains(theClusterId);
+    return myPassword;
 }
 
 // ============================================================================
 /*!
- *  \brief loginLocalCluster()
+ *  \brief userName()
 */
 // ============================================================================
-bool Mercury_Engine::loginLocalCluster(const int theClusterID,
-                                       const QString &theDirPath,
-                                       const QString &theUserName,
-                                       const QString &thePassword)
+QString Mercury_ClusterDriver::userName() const
 {
-
+    return myUserName;
 }
 
 // ============================================================================
 /*!
- *  \brief versionNumber()
+ *  \brief setConnectionName()
 */
 // ============================================================================
-QVersionNumber Mercury_Engine::versionNumber() const
+void Mercury_ClusterDriver::setConnectionName(const QString &theConnectionName)
 {
-    return QVersionNumber(QVariant(Mercury_VERSION_MAJOR).toInt(),
-                          QVariant(Mercury_VERSION_MINOR).toInt(),
-                          QVariant(Mercury_VERSION_PATCH).toInt());
+    myConnectionName = theConnectionName;
 }
 
+// ============================================================================
+/*!
+ *  \brief setPassword()
+*/
+// ============================================================================
+void Mercury_ClusterDriver::setPassword(const QString &thePassword)
+{
+    myPassword = thePassword;
+}
 
+// ============================================================================
+/*!
+ *  \brief setUserName()
+*/
+// ============================================================================
+void Mercury_ClusterDriver::setUserName(const QString &theUserName)
+{
+    myUserName = theUserName;
+}

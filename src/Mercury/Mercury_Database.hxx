@@ -20,44 +20,62 @@
 // ============================================================================
 
 
-#ifndef __Mercury_DatabaseModel_hxx__
-#define __Mercury_DatabaseModel_hxx__
+#ifndef __Mercury_Database_hxx__
+#define __Mercury_Database_hxx__
 
 // Qt
 #include <QObject>
 #include <QSqlDatabase>
+#include <QSqlTableModel>
+#include <QString>
 
 // Mercury
 #include <Mercury_DriverType.hxx>
 #include <Mercury_Export.hxx>
 
 
+
+
 // ============================================================================
 /*!
- *  \brief Mercury_DatabaseModel
- *  Base class implementation of a table model.
+ *  \brief Mercury_Database
 */
 // ============================================================================
-class Mercury_DatabaseModel : public QObject
+class Mercury_EXPORT Mercury_Database : public QObject
 {
     Q_OBJECT
 
 public:
     // constructors
-    Mercury_EXPORT Mercury_DatabaseModel(const QSqlDatabase& theDatabase,
-                                         QObject* theParent  = nullptr);
+    Mercury_Database();
     // destructors
-    Mercury_EXPORT ~Mercury_DatabaseModel();
+    ~Mercury_Database();
 
 public:
 
-    Mercury_EXPORT QSqlDatabase         database() const;
-    Mercury_EXPORT Mercury_DriverType   driverType() const;
+    QString             connectionName() const;
+    Mercury_DriverType  driverType() const;
+    QSqlDatabase        handle(const bool open = true) const;
+    bool                isOpen() const;
+    void                setConnectionName(const QString& theConnectionName);
+    void                setDriverType(const Mercury_DriverType theDriverType);
+    void                setFileName(const QString& theFileName);
+    void                setHostName(const QString& theHostName);
+    void                setPassword(const QString& thePassword);
+    void                setPort(const int thePort);
+    void                setUserName(const QString& theUserName);
 
 private:
 
-    QSqlDatabase            myDatabase;
+    QString             myConnectionName;
+    QString             myDatabaseName;
+    Mercury_DriverType  myDriverType;
+    QString             myFileName;
+    QString             myHostName;
+    QString             myPassword;
+    int                 myPort;
+    QString             myUserName;
 
 };
 
-#endif // __Mercury_DatabaseModel_hxx__
+#endif // __Mercury_Database_hxx__

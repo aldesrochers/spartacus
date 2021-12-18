@@ -20,31 +20,39 @@
 // ============================================================================
 
 
-#ifndef __Mercury_RemoteClusterDriver_hxx__
-#define __Mercury_RemoteClusterDriver_hxx__
+#ifndef __Mercury_Shape_hxx__
+#define __Mercury_Shape_hxx__
 
+// Qt
+#include <QString>
 
 // Mercury
-#include <Mercury_ClusterDriver.hxx>
 #include <Mercury_Export.hxx>
-
 
 
 // ============================================================================
 /*!
-    \brief Mercury_RemoteClusterDriver
-    Class implementation of a cluster driver for 'remote' clusters.
+ *  \brief Mercury_Shape
 */
 // ============================================================================
-class Mercury_RemoteClusterDriver : public Mercury_ClusterDriver
+class Mercury_EXPORT Mercury_Shape
 {
 
 public:
     // constructors
-    Mercury_EXPORT Mercury_RemoteClusterDriver();
+    Mercury_Shape();
     // destructors
-    Mercury_EXPORT ~Mercury_RemoteClusterDriver();
+    ~Mercury_Shape();
+
+public:
+
+    QString         designation() const;
+
+private:
+
+    QString         myDesignation;
+
 
 };
 
-#endif // __Mercury_RemoteClusterDriver_hxx__
+#endif // __Mercury_Shape_hxx__

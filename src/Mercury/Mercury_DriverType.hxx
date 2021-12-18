@@ -20,35 +20,21 @@
 // ============================================================================
 
 
-#ifndef __Mercury_LShapeTableModel_hxx__
-#define __Mercury_LShapeTableModel_hxx__
-
-
-// Mercury
-#include <Mercury_Export.hxx>
-#include <Mercury_TableModel.hxx>
+#ifndef __Mercury_DriverType_hxx__
+#define __Mercury_DriverType_hxx__
 
 
 // ============================================================================
 /*!
- *  \brief Mercury_LShapeTableModel
+ *  \brief Mercury_DriverType
+ *  Enumeration of mercury database driver types.
 */
 // ============================================================================
-class Mercury_LShapeTableModel : public Mercury_TableModel
+enum Mercury_DriverType
 {
-    Q_OBJECT
-
-public:
-    // constructors
-    Mercury_EXPORT Mercury_LShapeTableModel(const QSqlDatabase& theDatabase,
-                                           QObject* theParent  = nullptr);
-    // destructors
-    Mercury_EXPORT ~Mercury_LShapeTableModel();
-
-protected:
-
-    Mercury_EXPORT QString              createStatement() const override;
-
+    Mercury_SQLiteDriver,
+    Mercury_PostgresDriver,
+    Mercury_UnknownDriver
 };
 
-#endif // __Mercury_LShapeTableModel_hxx__
+#endif // __Mercury_DriverType_hxx__

@@ -19,105 +19,93 @@
 //
 // ============================================================================
 
-#include <iostream>
-using namespace std;
 
 // Mercury
-#include <Mercury_TableModel.hxx>
-#include <Mercury_Utilities.hxx>
-
-// Qt
-#include <QSqlError>
-#include <QSqlQuery>
+#include <Mercury_DatabaseDriver.hxx>
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief Constructor
 */
 // ============================================================================
-Mercury_TableModel::Mercury_TableModel(const QSqlDatabase& theDatabase,
-                                       QObject* theParent)
-    : QSqlTableModel(theParent, theDatabase)
+Mercury_DatabaseDriver::Mercury_DatabaseDriver(QObject* theParent)
+    : QObject(theParent)
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief Destructor
+ *  \brief Destructor
 */
 // ============================================================================
-Mercury_TableModel::~Mercury_TableModel()
+Mercury_DatabaseDriver::~Mercury_DatabaseDriver()
 {
 
 }
 
 // ============================================================================
 /*!
- *  \brief create()
- *  Create the table within database using the specified 'create statement'.
+ *  \brief connectionName()
 */
 // ============================================================================
-bool Mercury_TableModel::create()
+QString Mercury_DatabaseDriver::connectionName() const
 {
-    // check if non empty create statement
-    if(createStatement().isEmpty())
+    return myConnectionName;
+}
+
+// ============================================================================
+/*!
+ *  \brief driverName()
+*/
+// ============================================================================
+QString Mercury_DatabaseDriver::driverName() const
+{
+    return myDriverName;
+}
+
+// ============================================================================
+/*!
+ *  \brief handle()
+*/
+// ============================================================================
+QSqlDatabase Mercury_DatabaseDriver::handle(const bool open) const
+{
+    if(!QSqlDatabase::contains(myConnectionName))
+        return QSqlDatabase();
+    return QSqlDatabase::database(myConnectionName, open);
+}
+
+// ============================================================================
+/*!
+ *  \brief isOpen()
+*/
+// ============================================================================
+bool Mercury_DatabaseDriver::isOpen() const
+{
+    QSqlDatabase aDatabase = handle();
+    if(!aDatabase.isValid())
         return false;
-    // executable 'create statement'
-    QSqlQuery aQuery(database());
-    if(!aQuery.exec(createStatement())) {
-        setLastError(aQuery.lastError());
-        return false;
-    }
-    return true;
+    return aDatabase.isOpen();
 }
 
 // ============================================================================
 /*!
- *  \brief driverType()
+ *  \brief setConnectionName()
 */
 // ============================================================================
-Mercury_DriverType Mercury_TableModel::driverType() const
+void Mercury_DatabaseDriver::setConnectionName(const QString &theConnectionName)
 {
-    return Mercury_Utilities::driverType(database().driverName());
+    myConnectionName = theConnectionName;
 }
 
 // ============================================================================
 /*!
- *  \brief drop()
+ *  \brief setDriverName()
 */
 // ============================================================================
-bool Mercury_TableModel::drop()
+void Mercury_DatabaseDriver::setDriverName(const QString &theDriverName)
 {
-    QSqlQuery aQuery(database());
-    if(!aQuery.exec(dropStatement())) {
-        setLastError(aQuery.lastError());
-        return false;
-    }
-    return true;
+    myDriverName = theDriverName;
 }
-
-// ============================================================================
-/*!
- *  \brief dropStatement()
-*/
-// ============================================================================
-QString Mercury_TableModel::dropStatement() const
-{
-    QString aString = QString("DROP TABLE IF EXISTS %1").arg(tableName());
-    return aString;
-}
-
-// ============================================================================
-/*!
- *  \brief exists()
- *  Check if table exists in database.
-*/
-// ============================================================================
-bool Mercury_TableModel::exists() const
-{
-    return database().tables().contains(tableName());
-}
-
-

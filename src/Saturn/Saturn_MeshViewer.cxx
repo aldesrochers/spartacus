@@ -20,36 +20,3 @@
 // ============================================================================
 
 
-#ifndef __Mercury_Utilities_hxx__
-#define __Mercury_Utilities_hxx__
-
-// Qt
-#include <QString>
-
-// Mercury
-#include <Mercury_DriverType.hxx>
-#include <Mercury_Export.hxx>
-
-
-// ============================================================================
-/*!
- *  \brief Mercury_Utilities
- *  Class implementation of utility functions.
-*/
-// ============================================================================
-class Mercury_Utilities
-{
-
-public:
-
-    static Mercury_EXPORT QString               decryptString(const QString& theEncryptedString);
-    static Mercury_EXPORT Mercury_DriverType    driverType(const QString& theDriverName);
-    static Mercury_EXPORT QString               encryptString(const QString& theString);
-
-private:
-
-    static QString              encryptDecrypt(const QString& theString);
-
-};
-
-#endif // __Mercury_Utilities_hxx__

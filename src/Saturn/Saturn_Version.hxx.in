@@ -19,22 +19,13 @@
 //
 // ============================================================================
 
+#ifndef __Saturn_Version_hxx__
+#define __Saturn_Version_hxx__
 
-#ifndef __Mercury_ClusterType_hxx__
-#define __Mercury_ClusterType_hxx__
+// Version
+#define Saturn_VERSION_MAJOR        "@Saturn_VERSION_MAJOR@"
+#define Saturn_VERSION_MINOR        "@Saturn_VERSION_MINOR@"
+#define Saturn_VERSION_PATCH        "@Saturn_VERSION_PATCH@"
+#define Saturn_VERSION_STRING       "@Saturn_VERSION_MAJOR@.@Saturn_VERSION_MINOR@.@Saturn_VERSION_PATCH@"
 
-
-
-// ============================================================================
-/*!
-    \brief Mercury_ClusterType
-*/
-// ============================================================================
-enum Mercury_ClusterType
-{
-    Mercury_LocalCluster,
-    Mercury_RemoteCluster,
-    Mercury_UnknownCluster
-};
-
-#endif // __Mercury_ClusterType_hxx__
+#endif  // __Saturn_Version_hxx__

@@ -19,22 +19,29 @@
 //
 // ============================================================================
 
-
-#ifndef __Mercury_Error_hxx__
-#define __Mercury_Error_hxx__
+// Mercury
+#include <Mercury_TableModel.hxx>
 
 
 // ============================================================================
 /*!
- *  \brief Mercury_Error
+ *  \brief Constructor
 */
 // ============================================================================
-enum Mercury_Error
+Mercury_TableModel::Mercury_TableModel(const QSqlDatabase& theDatabase,
+                                       QObject* theParent)
+    : QSqlTableModel(theParent, theDatabase)
 {
-    Mercury_ExistingClusterError,
-    Mercury_InvalidDirectoryError,
-    Mercury_NoError,
-    Mercury_OpenError
-};
 
-#endif // __Mercury_Error_hxx__
+}
+
+// ============================================================================
+/*!
+ *  \brief Destructor
+*/
+// ============================================================================
+Mercury_TableModel::~Mercury_TableModel()
+{
+
+}
+

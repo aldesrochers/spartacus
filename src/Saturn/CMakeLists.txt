@@ -20,64 +20,47 @@
 # =============================================================================
 
 # version
-set(Mercury_VERSION_MAJOR 1)
-set(Mercury_VERSION_MINOR 0)
-set(Mercury_VERSION_PATCH 0)
+set(Saturn_VERSION_MAJOR 1)
+set(Saturn_VERSION_MINOR 0)
+set(Saturn_VERSION_PATCH 0)
 
 # configure version
-configure_file(Mercury_Version.hxx.in Mercury_Version.hxx)
+configure_file(Saturn_Version.hxx.in Saturn_Version.hxx)
 
 # include directories
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Sql_INCLUDE_DIRS}
 )
 
 # linked libraries
-set(Mercury_LINKED_LIBRARIES
+set(Saturn_LINKED_LIBRARIES
     ${Qt5Core_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
     ${Qt5Sql_LIBRARIES}
 )
 
 # headers
-set(Mercury_HEADERS
-    Mercury_Cluster.hxx
-    Mercury_ClusterDriver.hxx
-    Mercury_Database.hxx
-    Mercury_DriverType.hxx
-    Mercury_Export.hxx
-    Mercury_Shape.hxx
-    Mercury_ShapeDatabase.hxx
-    Mercury_TableModel.hxx
-    Mercury_TableView.hxx
+set(Saturn_HEADERS
+    Saturn_Export.hxx
+    Saturn_MeshViewer.hxx
 )
 
 # sources
-set(Mercury_SOURCES
-    Mercury_Cluster.cxx
-    Mercury_ClusterDriver.cxx
-    Mercury_Database.cxx
-    Mercury_Shape.cxx
-    Mercury_ShapeDatabase.cxx
-    Mercury_TableModel.cxx
-    Mercury_TableView.cxx
+set(Saturn_SOURCES
+    Saturn_MeshViewer.cxx
 )
 
 # rules
-add_library(Mercury SHARED ${Mercury_HEADERS} ${Mercury_SOURCES})
-target_link_libraries(Mercury ${Mercury_LINKED_LIBRARIES})
-install(TARGETS Mercury
+add_library(Saturn SHARED ${Saturn_HEADERS} ${Saturn_SOURCES})
+target_link_libraries(Saturn ${Saturn_LINKED_LIBRARIES})
+install(TARGETS Saturn
     ARCHIVE DESTINATION ${Spartacus_INSTALL_LIBRARIES}
     LIBRARY DESTINATION ${Spartacus_INSTALL_LIBRARIES}
     RUNTIME DESTINATION ${Spartacus_INSTALL_BINARIES})
 
-if(Mercury_BUILD_DEVELOPMENT)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Mercury_Version.hxx DESTINATION ${Spartacus_INSTALL_HEADERS})
-    install(FILES ${Mercury_HEADERS} DESTINATION ${Spartacus_INSTALL_HEADERS})
+if(Saturn_BUILD_DEVELOPMENT)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Saturn_Version.hxx DESTINATION ${Spartacus_INSTALL_HEADERS})
+    install(FILES ${Saturn_HEADERS} DESTINATION ${Spartacus_INSTALL_HEADERS})
 endif()

@@ -20,30 +20,13 @@
 // ============================================================================
 
 
-#ifndef __Mercury_ShapeDatabaseModel_hxx__
-#define __Mercury_ShapeDatabaseModel_hxx__
+#ifndef __Saturn_Export_hxx__
+#define __Saturn_Export_hxx__
 
-// Mercury
-#include <Mercury_DatabaseModel.hxx>
-#include <Mercury_Export.hxx>
+#ifdef WIN32
+    #define Saturn_EXPORT __declspec(dllexport)
+#else
+    #define Saturn_EXPORT
+#endif
 
-
-// ============================================================================
-/*!
- *  \brief Mercury_ShapeDatabaseModel
-*/
-// ============================================================================
-class Mercury_ShapeDatabaseModel : public Mercury_DatabaseModel
-{
-    Q_OBJECT
-
-public:
-    // constructors
-    Mercury_EXPORT Mercury_ShapeDatabaseModel(const QSqlDatabase& theDatabase,
-                                              QObject* theParent  = nullptr);
-    // destructors
-    Mercury_EXPORT ~Mercury_ShapeDatabaseModel();
-
-};
-
-#endif // __Mercury_ShapeDatabaseModel_hxx__
+#endif // __Saturn_Export_hxx__

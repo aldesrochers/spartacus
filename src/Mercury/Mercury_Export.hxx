@@ -24,11 +24,7 @@
 #define __Mercury_Export_hxx__
 
 #ifdef WIN32
-    #if defined Spartacus_EXPORTS
-        #define Mercury_EXPORT __declspec(dllexport)
-    #else
-        #define Mercury_EXPORT __declspec(dllimport)
-    #endif
+    #define Mercury_EXPORT __declspec(dllexport)
 #else
     #define Mercury_EXPORT
 #endif

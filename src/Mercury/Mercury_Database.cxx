@@ -21,157 +21,140 @@
 
 
 // Mercury
-#include <Mercury_LocalCluster.hxx>
-
-// Qt
-#include <QDebug>
-#include <QDir>
+#include <Mercury_Database.hxx>
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief Constructor
 */
 // ============================================================================
-Mercury_LocalCluster::Mercury_LocalCluster(const int theClusterId)
-    : Mercury_Cluster(theClusterId),
-      myFileExtension("db"),
-      myFilePrefix("Mercury")
+Mercury_Database::Mercury_Database()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief Destructor
+ *  \brief Destructor
 */
 // ============================================================================
-Mercury_LocalCluster::~Mercury_LocalCluster()
+Mercury_Database::~Mercury_Database()
 {
 
 }
 
 // ============================================================================
 /*!
-    \brief clusterType()
+ *  \brief connectionName()
 */
 // ============================================================================
-QString Mercury_LocalCluster::clusterType() const
+QString Mercury_Database::connectionName() const
 {
-    return QString("local");
+    return myConnectionName;
 }
 
 // ============================================================================
 /*!
-    \brief databaseFileExtension()
+ *  \brief driverType()
 */
 // ============================================================================
-QString Mercury_LocalCluster::databaseFileExtension() const
+Mercury_DriverType Mercury_Database::driverType() const
 {
-    return myFileExtension;
+    return myDriverType;
 }
 
 // ============================================================================
 /*!
-    \brief databaseFileName()
+ *  \brief handle()
+ *  Retrieve a reference to the underlying database connection handle.
 */
 // ============================================================================
-QString Mercury_LocalCluster::databaseFileName(const QString &theDatabaseName)
+QSqlDatabase Mercury_Database::handle(const bool open) const
 {
-    QString aFileName = myDirectoryPath + QDir::separator()
-            + myFilePrefix + QString("_") + theDatabaseName
-            + QString(".") + myFileExtension;
-    return aFileName;
+    if(!QSqlDatabase::contains(myConnectionName))
+        return QSqlDatabase();
+    return QSqlDatabase::database(myConnectionName, open);
 }
 
 // ============================================================================
 /*!
-    \brief databaseFilePrefix()
+ *  \brief isOpen()
 */
 // ============================================================================
-QString Mercury_LocalCluster::databaseFilePrefix() const
+bool Mercury_Database::isOpen() const
 {
-    return myFilePrefix;
-}
-
-// ============================================================================
-/*!
-    \brief directoryPath()
-*/
-// ============================================================================
-QString Mercury_LocalCluster::directoryPath() const
-{
-    return myDirectoryPath;
-}
-
-// ============================================================================
-/*!
-    \brief open()
-*/
-// ============================================================================
-bool Mercury_LocalCluster::open()
-{
-    // check if valid directory path
-    QDir aDir(myDirectoryPath);
-    if(!aDir.exists()) {
-        setOpenError(Mercury_InexistingDirectoryPathError);
+    if(!handle().isValid())
         return false;
-    }
-    // check if valid username
-    if(myUsername.isEmpty()) {
-        setOpenError(Mercury_EmptyUserNameError);
-        return false;
-    }
-    // check if valid password
-    if(myPassword.isEmpty()) {
-        setOpenError(Mercury_EmptyPasswordError);
-        return false;
-    }
-    // get connection name for 'admin' database
-    QString aConnectionName = databaseConnectionName("Admin");
-    // get filename for 'admin' database
-    QString aFileName = databaseFileName("Admin");
-    // create database connection
-    QSqlDatabase aDatabase = QSqlDatabase::addDatabase("QSQLITE", aConnectionName);
-    aDatabase.setDatabaseName(aFileName);
-    if(!aDatabase.open()) {
-        setOpenError(Mercury_ConnectionError);
-        return false;
-    }
-
-    return true;
+    return handle().isOpen();
 }
 
 // ============================================================================
 /*!
-    \brief setDatabaseFileExtension()
+ *  \brief setConnectionName()
 */
 // ============================================================================
-void Mercury_LocalCluster::setDatabaseFileExtension(const QString &theFileExtension)
+void Mercury_Database::setConnectionName(const QString &theConnectionName)
 {
-    if(!isOpen())
-        myFileExtension = theFileExtension;
+    myConnectionName = theConnectionName;
 }
 
 // ============================================================================
 /*!
-    \brief setDatabaseFilePrefix()
+ *  \brief setDriverType()
 */
 // ============================================================================
-void Mercury_LocalCluster::setDatabaseFilePrefix(const QString &theFilePrefix)
+void Mercury_Database::setDriverType(const Mercury_DriverType theDriverType)
 {
-    if(!isOpen())
-        myFilePrefix = theFilePrefix;
+    myDriverType = theDriverType;
 }
 
 // ============================================================================
 /*!
-    \brief setDirectoryPath()
+ *  \brief setFileName()
 */
 // ============================================================================
-void Mercury_LocalCluster::setDirectoryPath(const QString &thedirectoryPath)
+void Mercury_Database::setFileName(const QString &theFileName)
 {
-    if(!isOpen())
-        myDirectoryPath = thedirectoryPath;
+    myFileName = theFileName;
 }
 
+// ============================================================================
+/*!
+ *  \brief setHostName()
+*/
+// ============================================================================
+void Mercury_Database::setHostName(const QString &theHostName)
+{
+    myHostName = theHostName;
+}
+
+// ============================================================================
+/*!
+ *  \brief setPassword()
+*/
+// ============================================================================
+void Mercury_Database::setPassword(const QString &thePassword)
+{
+    myPassword = thePassword;
+}
+
+// ============================================================================
+/*!
+ *  \brief setPort()
+*/
+// ============================================================================
+void Mercury_Database::setPort(const int thePort)
+{
+    myPort = thePort;
+}
+
+// ============================================================================
+/*!
+ *  \brief setUserName()
+*/
+// ============================================================================
+void Mercury_Database::setUserName(const QString &theUserName)
+{
+    myUserName = theUserName;
+}

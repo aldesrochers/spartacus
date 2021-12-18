@@ -20,30 +20,32 @@
 // ============================================================================
 
 
+#ifndef __Mercury_ShapeDatabase_hxx__
+#define __Mercury_ShapeDatabase_hxx__
+
 // Mercury
-#include <Mercury_ShapeDatabaseModel.hxx>
+#include <Mercury_Database.hxx>
 
 
 
 // ============================================================================
 /*!
-    \brief Constructor
+ *  \brief Mercury_ShapeDatabase
 */
 // ============================================================================
-Mercury_ShapeDatabaseModel::Mercury_ShapeDatabaseModel(const QSqlDatabase& theDatabase,
-                                                       QObject* theParent)
-    : Mercury_DatabaseModel(theDatabase, theParent)
+class Mercury_EXPORT Mercury_ShapeDatabase : public Mercury_Database
 {
 
-}
+public:
+    // constructors
+    Mercury_ShapeDatabase();
+    // destructors
+    ~Mercury_ShapeDatabase();
 
-// ============================================================================
-/*!
-    \brief Destructor
-*/
-// ============================================================================
-Mercury_ShapeDatabaseModel::~Mercury_ShapeDatabaseModel()
-{
+public:
 
-}
+    bool            createTable(const QString& theTableName);
 
+};
+
+#endif // __Mercury_ShapeDatabase_hxx__

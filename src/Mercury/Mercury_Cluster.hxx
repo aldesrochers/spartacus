@@ -24,42 +24,33 @@
 #define __Mercury_Cluster_hxx__
 
 // Qt
-#include <QObject>
+#include <QMap>
+#include <QString>
 
 // Mercury
 #include <Mercury_Export.hxx>
 
 // Forward declarations
-class Mercury_Engine;
+class Mercury_Cluster;
+
+// Type definitions
+typedef QMap<int, Mercury_Cluster>      Mercury_MapOfCluster;
 
 
 // ============================================================================
 /*!
  *  \brief Mercury_Cluster
- *  Base class implementation of a database cluster.
+ *  Class implementation of a cluster connection.
 */
 // ============================================================================
-class Mercury_Cluster : public QObject
+class Mercury_EXPORT Mercury_Cluster
 {
-    Q_OBJECT
 
 public:
     // constructors
-    Mercury_Cluster(Mercury_Engine* theEngine,
-                    const int theClusterId);
+    Mercury_Cluster();
     // destructors
     ~Mercury_Cluster();
-
-public:
-
-    Mercury_EXPORT int                  clusterId() const;
-    Mercury_EXPORT QString              connectionName() const;
-    Mercury_EXPORT Mercury_Engine*      engine();
-
-private:
-
-    int                     myClusterId;
-    Mercury_Engine*         myEngine;
 
 };
 
