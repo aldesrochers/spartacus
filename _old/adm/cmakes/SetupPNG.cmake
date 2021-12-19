@@ -19,3 +19,11 @@
 #
 # =============================================================================
 
+
+# MinGW : Install Rules
+if(MINGW)
+    Spartacus_INSTALL_MINGW_LIBRARY(libpng16-16.dll)
+endif()
+
+
+

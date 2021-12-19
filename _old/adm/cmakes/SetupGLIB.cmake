@@ -19,3 +19,10 @@
 #
 # =============================================================================
 
+
+# MinGW : Install Rules
+if(MINGW)
+    Spartacus_INSTALL_MINGW_LIBRARY(libglib-2.0-0.dll)
+endif()
+
+

@@ -19,3 +19,8 @@
 #
 # =============================================================================
 
+
+# MinGW : Install Rules
+if(MINGW)
+    Spartacus_INSTALL_MINGW_LIBRARY(libharfbuzz-0.dll)
+endif()

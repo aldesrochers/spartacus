@@ -28,8 +28,8 @@ if(NOT UNIX AND NOT MSYS AND NOT MINGW AND NOT MSVC)
 endif()
 
 # check for project cmake files
-if(EXISTS ${PROJECT_SOURCE_DIR}/adm/cmakes)
-    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/adm/cmakes)
+if(EXISTS ${PROJECT_SOURCE_DIR}/cmakes)
+    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmakes)
     include(SpartacusMacros)
 else()
     message(FATAL_ERROR "Could not locate project cmake files.")
@@ -38,11 +38,14 @@ endif()
 ###
 # options
 ###
-option(Spartacus_BUILD_DEVELOPMENT      "Build Spartacus in development mode ?" ON)
+include(CMakeDependentOption)
+
 option(Spartacus_BUILD_DOCUMENTATION    "Build Spartacus documentation ?" ON)
 option(Spartacus_BUILD_STANDALONE       "Build Spartacus in stand-alone mode ?" ON)
 option(Spartacus_BUILD_TESTS            "Build Spartacus tests ?" ON)
-option(Spartacus_USE_QT6                "Build Spartacus using Qt6 ?" OFF)
+option(Spartacus_USE_QT6                "Build Spartacus using Qt6 ?" ON)
+
+cmake_dependent_option(Spartacus_BUILD_DEVELOPMENT "Build Spartacus in development mode ?" ON "NOT Spartacus_BUILD_STANDALONE" OFF)
 
 ###
 # configuration
@@ -52,10 +55,18 @@ option(Spartacus_USE_QT6                "Build Spartacus using Qt6 ?" OFF)
 set(BUILD_SHARED_LIBS ON)
 
 # install directories
-set(Spartacus_INSTALL_BINARIES  bin)
-set(Spartacus_INSTALL_HEADERS   include)
-set(Spartacus_INSTALL_LIBRARIES lib)
-set(Spartacus_INSTALL_RCCS      bin/resources)
+set(Spartacus_INSTALL_ROOT      ${CMAKE_INSTALL_PREFIX})
+if(Spartacus_BUILD_STANDALONE)
+    set(Spartacus_INSTALL_BINARIES  ${Spartacus_INSTALL_ROOT})
+    set(Spartacus_INSTALL_HEADERS   ${Spartacus_INSTALL_ROOT}/include)
+    set(Spartacus_INSTALL_LIBRARIES ${Spartacus_INSTALL_ROOT}/lib)
+    set(Spartacus_INSTALL_RCCS      ${Spartacus_INSTALL_ROOT}/resources)
+else()
+    set(Spartacus_INSTALL_BINARIES  ${Spartacus_INSTALL_ROOT}/bin)
+    set(Spartacus_INSTALL_HEADERS   ${Spartacus_INSTALL_ROOT}/include/spartacus)
+    set(Spartacus_INSTALL_LIBRARIES ${Spartacus_INSTALL_ROOT}/lib/spartacus)
+    set(Spartacus_INSTALL_RCCS      ${Spartacus_INSTALL_ROOT}/lib/spartacus)
+endif()
 
 # prerequisites
 include(SetupBROTLI)
@@ -82,14 +93,11 @@ include(SetupZSTD)
 ###
 # sources
 ###
-add_subdirectory(adm)
-if(Spartacus_BUILD_DOCUMENTATION)
-    add_subdirectory(doc)
-endif()
-add_subdirectory(res)
-add_subdirectory(src)
+add_subdirectory(applications)
+add_subdirectory(modules)
+add_subdirectory(packages)
+add_subdirectory(plugins)
+add_subdirectory(resources)
 if(Spartacus_BUILD_TESTS)
     add_subdirectory(tests)
 endif()
-
-

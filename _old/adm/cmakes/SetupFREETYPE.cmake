@@ -19,3 +19,13 @@
 #
 # =============================================================================
 
+
+# MinGW : Install Rules
+if(MINGW)
+    Spartacus_INSTALL_MINGW_LIBRARY(libfreetype-6.dll)
+endif()
+
+
+
+
+

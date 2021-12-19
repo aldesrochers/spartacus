@@ -19,3 +19,12 @@
 #
 # =============================================================================
 
+
+# MinGW : Install Rules
+if(MINGW)
+    Spartacus_INSTALL_MINGW_LIBRARY(libpcre-1.dll)
+    Spartacus_INSTALL_MINGW_LIBRARY(libpcre2-16-0.dll)
+endif()
+
+
+

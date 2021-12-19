@@ -19,3 +19,11 @@
 #
 # =============================================================================
 
+
+# icons
+qt6_add_binary_resources(SpartacusIcons icons/Resources.qrc)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/SpartacusIcons.rcc DESTINATION ${Spartacus_INSTALL_RCCS})
+
+# images
+qt6_add_binary_resources(SpartacusImages images/Resources.qrc)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/SpartacusImages.rcc DESTINATION ${Spartacus_INSTALL_RCCS})

@@ -19,3 +19,12 @@
 #
 # =============================================================================
 
+
+# MinGW : Install Rules
+if(MINGW)
+    Spartacus_INSTALL_MINGW_LIBRARY(libbz2-1.dll)
+endif()
+
+
+
+

@@ -19,3 +19,6 @@
 #
 # =============================================================================
 
+add_subdirectory(Jupiter)
+add_subdirectory(Mercury)
+add_subdirectory(Saturn)

@@ -19,3 +19,30 @@
 #
 # =============================================================================
 
+# include directories
+include_directories(
+    ${PROJECT_BINARY_DIR}/src/Mercury
+    ${PROJECT_SOURCE_DIR}/src/Mercury
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${QtCore_INCLUDE_DIRS}
+    ${QtGui_INCLUDE_DIRS}
+    ${QtWidgets_INCLUDE_DIRS}
+    ${QtSql_INCLUDE_DIRS}
+    ${OpenCASCADE_INCLUDE_DIRS}
+)
+
+# linked libraries
+set(_linked_libraries
+    ${QtCore_LIBRARIES}
+    ${QtGui_LIBRARIES}
+    ${QtWidgets_LIBRARIES}
+    ${QtSql_LIBRARIES}
+    ${OpenCASCADE_FoundationClasses_LIBRARIES}
+    Mercury
+)
+
+# rule : TestCluster
+add_executable(Mercury_TestCluster WIN32 Mercury_TestCluster.cxx)
+target_link_libraries(Mercury_TestCluster ${_linked_libraries})
+

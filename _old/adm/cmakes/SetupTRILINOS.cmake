@@ -19,3 +19,9 @@
 #
 # =============================================================================
 
+# try to locate using standard macros
+find_package(Trilinos REQUIRED)
+if(NOT Trilinos_FOUND)
+    message(FATAL_ERROR "Could not locate Trilinos.")
+endif()
+mark_as_advanced(Trilinos_DIR)

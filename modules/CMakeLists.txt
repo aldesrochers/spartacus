@@ -19,3 +19,8 @@
 #
 # =============================================================================
 
+# core
+add_subdirectory(Spartacus)
+
+# modules
+add_subdirectory(Huygens)
