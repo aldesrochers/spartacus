@@ -19,3 +19,16 @@
 #
 # =============================================================================
 
+
+if(Spartacus_BUILD_STANDALONE)
+
+    # MinGW
+    if(MINGW)
+        Spartacus_INSTALL_MINGW_LIBRARY(libdouble-conversion.dll)
+    endif()
+
+endif()
+
+
+
+

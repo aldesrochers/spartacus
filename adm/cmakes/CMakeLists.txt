@@ -19,3 +19,13 @@
 #
 # =============================================================================
 
+# define cmake files
+set(CMAKE_FILES
+    SpartacusMacros.cmake
+)
+
+# install
+if(Spartacus_BUILD_DEVELOPMENT)
+    install(FILES ${CMAKE_FILES} DESTINATION ${Spartacus_INSTALL_CMAKES})
+endif()
+

@@ -19,3 +19,12 @@
 #
 # =============================================================================
 
+if(Spartacus_BUILD_STANDALONE)
+
+    # MinGW
+    if(MINGW)
+        Spartacus_INSTALL_MINGW_LIBRARY(libbrotlicommon.dll)
+        Spartacus_INSTALL_MINGW_LIBRARY(libbrotlidec.dll)
+    endif()
+
+endif()

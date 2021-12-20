@@ -19,3 +19,14 @@
 #
 # =============================================================================
 
+
+if(Spartacus_BUILD_STANDALONE)
+
+    # MinGW
+    if(MINGW)
+        Spartacus_INSTALL_MINGW_LIBRARY(libglib-2.0-0.dll)
+    endif()
+
+endif()
+
+

@@ -19,3 +19,19 @@
 #
 # =============================================================================
 
+# define ICU current version
+set(ICU_VERSION 69)
+
+if(Spartacus_BUILD_STANDALONE)
+
+    # MinGW
+    if(MINGW)
+        Spartacus_INSTALL_MINGW_LIBRARY(libicudt${ICU_VERSION}.dll)
+        Spartacus_INSTALL_MINGW_LIBRARY(libicuin${ICU_VERSION}.dll)
+        Spartacus_INSTALL_MINGW_LIBRARY(libicuuc${ICU_VERSION}.dll)
+    endif()
+
+endif()
+
+
+

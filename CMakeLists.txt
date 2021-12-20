@@ -28,8 +28,8 @@ if(NOT UNIX AND NOT MSYS AND NOT MINGW AND NOT MSVC)
 endif()
 
 # check for project cmake files
-if(EXISTS ${PROJECT_SOURCE_DIR}/cmakes)
-    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmakes)
+if(EXISTS ${PROJECT_SOURCE_DIR}/adm/cmakes)
+    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/adm/cmakes)
     include(SpartacusMacros)
 else()
     message(FATAL_ERROR "Could not locate project cmake files.")
@@ -45,7 +45,8 @@ option(Spartacus_BUILD_STANDALONE       "Build Spartacus in stand-alone mode ?" 
 option(Spartacus_BUILD_TESTS            "Build Spartacus tests ?" ON)
 option(Spartacus_USE_QT6                "Build Spartacus using Qt6 ?" ON)
 
-cmake_dependent_option(Spartacus_BUILD_DEVELOPMENT "Build Spartacus in development mode ?" ON "NOT Spartacus_BUILD_STANDALONE" OFF)
+cmake_dependent_option(Spartacus_BUILD_DEVELOPMENT  "Build Spartacus in development mode ?" ON "NOT Spartacus_BUILD_STANDALONE" OFF)
+cmake_dependent_option(Spartacus_BUILD_INSTALLER    "Build Spartacus installer ?" ON "Spartacus_BUILD_STANDALONE" OFF)
 
 ###
 # configuration
@@ -58,11 +59,13 @@ set(BUILD_SHARED_LIBS ON)
 set(Spartacus_INSTALL_ROOT      ${CMAKE_INSTALL_PREFIX})
 if(Spartacus_BUILD_STANDALONE)
     set(Spartacus_INSTALL_BINARIES  ${Spartacus_INSTALL_ROOT})
+    set(Spartacus_INSTALL_CMAKES    ${Spartacus_INSTALL_ROOT}/cmakes)
     set(Spartacus_INSTALL_HEADERS   ${Spartacus_INSTALL_ROOT}/include)
     set(Spartacus_INSTALL_LIBRARIES ${Spartacus_INSTALL_ROOT}/lib)
     set(Spartacus_INSTALL_RCCS      ${Spartacus_INSTALL_ROOT}/resources)
 else()
     set(Spartacus_INSTALL_BINARIES  ${Spartacus_INSTALL_ROOT}/bin)
+    set(Spartacus_INSTALL_CMAKES    ${Spartacus_INSTALL_ROOT}/lib/cmakes)
     set(Spartacus_INSTALL_HEADERS   ${Spartacus_INSTALL_ROOT}/include/spartacus)
     set(Spartacus_INSTALL_LIBRARIES ${Spartacus_INSTALL_ROOT}/lib/spartacus)
     set(Spartacus_INSTALL_RCCS      ${Spartacus_INSTALL_ROOT}/lib/spartacus)
@@ -93,11 +96,10 @@ include(SetupZSTD)
 ###
 # sources
 ###
-add_subdirectory(applications)
-add_subdirectory(modules)
-add_subdirectory(packages)
-add_subdirectory(plugins)
-add_subdirectory(resources)
-if(Spartacus_BUILD_TESTS)
-    add_subdirectory(tests)
+add_subdirectory(adm)
+if(Spartacus_BUILD_DOCUMENTATION)
+    add_subdirectory(doc)
 endif()
+add_subdirectory(etc)
+add_subdirectory(res)
+add_subdirectory(src)

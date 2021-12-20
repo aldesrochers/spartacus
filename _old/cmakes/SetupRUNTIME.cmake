@@ -19,3 +19,14 @@
 #
 # =============================================================================
 
+
+if(Spartacus_BUILD_STANDALONE)
+
+    # MinGW
+    if(MINGW)
+        Spartacus_INSTALL_MINGW_LIBRARY(libwinpthread-1.dll)
+        Spartacus_INSTALL_MINGW_LIBRARY(libstdc++-6.dll)
+        Spartacus_INSTALL_MINGW_LIBRARY(libgcc_s_seh-1.dll)
+    endif()
+
+endif()
