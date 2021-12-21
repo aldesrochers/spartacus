@@ -19,4 +19,5 @@
 #
 # =============================================================================
 
-add_subdirectory(cmakes)
+# toolkits
+add_subdirectory(Mercury)

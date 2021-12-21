@@ -28,8 +28,8 @@ if(NOT UNIX AND NOT MSYS AND NOT MINGW AND NOT MSVC)
 endif()
 
 # check for project cmake files
-if(EXISTS ${PROJECT_SOURCE_DIR}/adm/cmakes)
-    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/adm/cmakes)
+if(EXISTS ${PROJECT_SOURCE_DIR}/cmakes)
+    list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmakes)
     include(SpartacusMacros)
 else()
     message(FATAL_ERROR "Could not locate project cmake files.")
@@ -96,10 +96,8 @@ include(SetupZSTD)
 ###
 # sources
 ###
-add_subdirectory(adm)
-if(Spartacus_BUILD_DOCUMENTATION)
-    add_subdirectory(doc)
-endif()
-add_subdirectory(etc)
-add_subdirectory(res)
-add_subdirectory(src)
+add_subdirectory(applications)
+add_subdirectory(cmakes)
+add_subdirectory(libraries)
+add_subdirectory(plugins)
+add_subdirectory(resources)
